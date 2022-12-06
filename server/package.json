@@ -6,7 +6,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "replicache": ">=12.0.1",
-    "replicache-express": "^0.1.5",
+    "replicache-express": "^0.2.1",
     "replicache-quickstarts-shared": "^0.1.0"
   },
   "devDependencies": {
