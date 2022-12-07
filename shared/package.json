@@ -1,5 +1,5 @@
 {
-  "name": "replicache-quickstarts-shared",
+  "name": "shared",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {

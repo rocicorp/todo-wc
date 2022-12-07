@@ -1,4 +1,4 @@
-import type {TodoUpdate} from 'replicache-quickstarts-shared';
+import type {TodoUpdate} from 'shared';
 import {assert} from '../assert';
 
 const templateTodoItem = document.createElement('template');

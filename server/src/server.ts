@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import path from 'path';
 import {ReplicacheExpressServer} from 'replicache-express';
-import {mutators} from 'replicache-quickstarts-shared';
+import {mutators} from 'shared';
 import {fileURLToPath} from 'url';
 import express from 'express';
 import fs from 'fs';
