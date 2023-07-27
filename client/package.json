@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "lint": "eslint --ext .ts,.tsx,.js,.jsx .",
+    "lint": "eslint --ext .ts,.tsx .",
     "dev": "vite",
     "check-types": "tsc --noEmit",
     "build": "tsc && vite build",

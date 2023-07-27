@@ -2,13 +2,13 @@ import type {PGConfig} from './pgconfig/pgconfig.js';
 import type {Executor} from './pg.js';
 
 export async function createDatabase(executor: Executor, dbConfig: PGConfig) {
-  console.log('creating database');
+  console.log('Creating Database');
   const schemaVersion = await dbConfig.getSchemaVersion(executor);
   const migrations = [createSchemaVersion1];
+  await createSchemaVersion1(executor);
   if (schemaVersion < 0 || schemaVersion > migrations.length) {
     throw new Error('Unexpected schema version: ' + schemaVersion);
   }
-
   for (let i = schemaVersion; i < migrations.length; i++) {
     console.log('Running migration for schemaVersion', i);
     await migrations[i](executor);
@@ -17,10 +17,10 @@ export async function createDatabase(executor: Executor, dbConfig: PGConfig) {
 
 export async function createSchemaVersion1(executor: Executor) {
   await executor(
-    'create table replicache_meta (key text primary key, value json)',
+    `create table replicache_meta (key text primary key, value json)`,
   );
   await executor(
-    "insert into replicache_meta (key, value) values ('schemaVersion', '1')",
+    `insert into replicache_meta (key, value) values ('schemaVersion', '1')`,
   );
 
   await executor(`create table replicache_space (
