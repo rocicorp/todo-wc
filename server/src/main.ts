@@ -1,10 +1,14 @@
 import 'dotenv/config';
 import path from 'path';
-import {ReplicacheExpressServer} from './server';
 import {mutators} from 'shared';
 import {fileURLToPath} from 'url';
 import express from 'express';
+import type Express from 'express';
+import {handleRequest as handleRequestImpl} from '../endpoints/handle-request.js';
+import type {MutatorDefs} from 'replicache';
+
 import fs from 'fs';
+import {handlePoke} from '../endpoints/handle-poke';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const portEnv = parseInt(process.env.PORT || '');
@@ -17,24 +21,58 @@ const options = {
 
 const default_dist = path.join(__dirname, '../dist/dist');
 
+const app = express();
+
+const errorHandler = (
+  err: Error,
+  _req: Express.Request,
+  res: Express.Response,
+  next: Express.NextFunction,
+) => {
+  res.status(500).send(err.message);
+  next(err);
+};
+
+app.use(express.urlencoded({extended: true}), express.json(), errorHandler);
+
+app.post(
+  '/api/replicache/:op',
+  async (
+    req: Express.Request,
+    res: Express.Response,
+    next: Express.NextFunction,
+  ) => {
+    await handleRequest(req, res, next, mutators);
+  },
+);
+app.get(
+  '/api/replicache/poke',
+  async (req: Express.Request, res: Express.Response) => {
+    await handlePoke(req, res);
+  },
+);
+
 if (process.env.NODE_ENV === 'production') {
-  const r = new ReplicacheExpressServer(options);
-  r.app.use(express.static(default_dist));
-  r.app.get('/health', (_req, res) => {
+  app.use(express.static(default_dist));
+  app.get('/health', (_req, res) => {
     res.send('ok');
   });
-  r.app.use('*', (_req, res) => {
+  app.use('*', (_req, res) => {
     const index = path.join(default_dist, 'index.html');
     const html = fs.readFileSync(index, 'utf8');
     res.status(200).set({'Content-Type': 'text/html'}).end(html);
   });
-  r.start(() => {
-    console.log(
-      `Replicache is listening on ${options.host}:${options.port} -- ${default_dist}`,
-    );
-  });
-} else {
-  ReplicacheExpressServer.start(options, () => {
-    console.log(`Server listening on ${options.host}:${options.port}`);
-  });
+}
+
+app.listen(options.port, options.host, () => {
+  console.log(`Server listening on ${options.host}:${options.port}`);
+});
+
+export async function handleRequest<M extends MutatorDefs>(
+  req: Express.Request,
+  res: Express.Response,
+  next: Express.NextFunction,
+  mutators: M,
+) {
+  await handleRequestImpl(req, res, next, mutators);
 }

@@ -1,7 +1,7 @@
 import {nanoid} from 'nanoid';
 import type Express from 'express';
-import { createSpace, spaceExists } from '../src/index';
-
+import { transact } from '../src/pg.js';
+import { getCookie, createSpace as createSpaceImpl } from "../src/data.js";
 
 export async function handleCreateSpace(
   req: Express.Request,
@@ -16,7 +16,9 @@ export async function handleCreateSpace(
     next(Error(`SpaceID must be 10 characters or less`));
   }
   try {
-    await createSpace(spaceID);
+    await transact(async (executor) => {
+      await createSpaceImpl(executor, spaceID);
+    });
     res.status(200).send({ spaceID });
   } catch (e: any) {
     next(Error(`Failed to create space ${spaceID}`, e));
@@ -29,10 +31,12 @@ export async function handleSpaceExist(
   next: Express.NextFunction
 ): Promise<void> {
   try {
-    const exists = await spaceExists(req.body.spaceID);
+    const cookie = await transact(async (executor) => {
+      return await getCookie(executor, req.body.spaceID);
+    });
+    const exists = cookie !== undefined;
     res.status(200).send({ spaceExists: exists });
   } catch (e: any) {
     next(Error(`Failed to check space exists ${req.body.spaceID}`, e));
   }
 }
-

@@ -5,14 +5,10 @@ export async function createDatabase(executor: Executor, dbConfig: PGConfig) {
   console.log('Creating Database');
   const schemaVersion = await dbConfig.getSchemaVersion(executor);
   const migrations = [createSchemaVersion1];
-  await createSchemaVersion1(executor);
   if (schemaVersion < 0 || schemaVersion > migrations.length) {
     throw new Error('Unexpected schema version: ' + schemaVersion);
   }
-  for (let i = schemaVersion; i < migrations.length; i++) {
-    console.log('Running migration for schemaVersion', i);
-    await migrations[i](executor);
-  }
+  await createSchemaVersion1(executor);
 }
 
 export async function createSchemaVersion1(executor: Executor) {
