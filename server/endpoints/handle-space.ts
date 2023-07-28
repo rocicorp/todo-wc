@@ -1,7 +1,7 @@
 import {nanoid} from 'nanoid';
 import type Express from 'express';
 import { transact } from '../src/pg.js';
-import { getCookie, createSpace as createSpaceImpl } from "../src/data.js";
+import { getCookie, createSpace } from "../src/data.js";
 
 export async function handleCreateSpace(
   req: Express.Request,
@@ -17,7 +17,7 @@ export async function handleCreateSpace(
   }
   try {
     await transact(async (executor) => {
-      await createSpaceImpl(executor, spaceID);
+      await createSpace(executor, spaceID);
     });
     res.status(200).send({ spaceID });
   } catch (e: any) {

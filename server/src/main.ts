@@ -4,8 +4,7 @@ import {mutators} from 'shared';
 import {fileURLToPath} from 'url';
 import express from 'express';
 import type Express from 'express';
-import {handleRequest as handleRequestImpl} from '../endpoints/handle-request.js';
-import type {MutatorDefs} from 'replicache';
+import {handleRequest} from '../endpoints/handle-request.js';
 
 import fs from 'fs';
 import {handlePoke} from '../endpoints/handle-poke';
@@ -67,12 +66,3 @@ if (process.env.NODE_ENV === 'production') {
 app.listen(options.port, options.host, () => {
   console.log(`Server listening on ${options.host}:${options.port}`);
 });
-
-export async function handleRequest<M extends MutatorDefs>(
-  req: Express.Request,
-  res: Express.Response,
-  next: Express.NextFunction,
-  mutators: M,
-) {
-  await handleRequestImpl(req, res, next, mutators);
-}
