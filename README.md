@@ -2,7 +2,7 @@
 
 # todo-wc
 
-This repository contains sample code for [Replicache](https://replicache.dev/). The example uses web-components with a common express server backend. The backend utilizes the [replicache-express](https://github.com/rocicorp/replicache-express) library which implements the `push`, `pull`, `poke`, `createSpace`, and `spaceExists` handlers required for Replicache sync protocol. This library intends to help developers easily experiment with Replicache.
+This repository contains sample code for [Replicache](https://replicache.dev/). The example uses web-components with a common express server backend. The backend utilizes Express and demonstrates implementations of `push`, `pull`, `poke`, `createSpace`, and `spaceExists` handlers. These are required for the Replicache sync protocol. This library intends to help developers easily experiment with Replicache.
 
 ## 1. Setup
 

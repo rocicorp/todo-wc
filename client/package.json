@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "lint": "eslint --ext .ts,.tsx,.js,.jsx .",
+    "lint": "eslint --ext .ts,.tsx .",
     "dev": "vite",
     "check-types": "tsc --noEmit",
     "build": "tsc && vite build",
@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "nanoid": "^4.0.0",
-    "replicache": ">=12.0.1",
-    "replicache-react": "^2.9.0",
+    "replicache": ">=13.0.0",
+    "replicache-react": "3.0.0",
     "shared": "^0.1.0"
   },
   "devDependencies": {
