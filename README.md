@@ -4,8 +4,6 @@
 
 This repository contains sample code for [Replicache](https://replicache.dev/). The example uses web-components with a common express server backend. The backend utilizes the [replicache-express](https://github.com/rocicorp/replicache-express) library which implements the `push`, `pull`, `poke`, `createSpace`, and `spaceExists` handlers required for Replicache sync protocol. This library intends to help developers easily experiment with Replicache.
 
-Running live at https://replicache-todo-nextjs.vercel.app/
-
 ## 1. Setup
 
 #### Get your Replicache License Key
