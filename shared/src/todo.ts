@@ -2,7 +2,7 @@
 // function to get all Todos. You'd typically have one of these files for each
 // domain object in your application.
 
-import type {ReadTransaction} from 'replicache';
+import type {ScanNoIndexOptions, ReadTransaction} from 'replicache';
 
 export type Todo = {
   id: string;
@@ -14,5 +14,8 @@ export type Todo = {
 export type TodoUpdate = Partial<Todo> & Pick<Todo, 'id'>;
 
 export async function listTodos(tx: ReadTransaction) {
-  return (await tx.scan({prefix: 'todo/'}).values().toArray()) as Todo[];
+  return await tx
+    .scan<ScanNoIndexOptions, Todo>({prefix: 'todo/'})
+    .values()
+    .toArray();
 }
