@@ -58,6 +58,6 @@ export const mutators = {
     todos.sort((t1, t2) => t1.sort - t2.sort);
 
     const maxSort = todos.pop()?.sort ?? 0;
-    await tx.put(`todo/${todo.id}`, {...todo, sort: maxSort + 1});
+    await tx.set(`todo/${todo.id}`, {...todo, sort: maxSort + 1});
   },
 };

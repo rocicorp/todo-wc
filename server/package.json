@@ -5,10 +5,10 @@
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "replicache": ">=14.0.0",
+    "replicache": ">=14.0.2",
     "shared": "^0.1.0",
     "nanoid": "^4.0.0",
-    "replicache-transaction": "^0.3.2"
+    "replicache-transaction": "^0.3.3"
   },
   "devDependencies": {
     "shared": "^0.1.0",

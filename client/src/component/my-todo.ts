@@ -48,13 +48,11 @@ export class MyTodo extends HTMLElement {
       throw new Error('replicache already set');
     }
     this._r = r;
-    this._r.subscribe(listTodos, {
-      onData: data => {
-        this._list = data;
-        this._list.sort((a: Todo, b: Todo) => a.sort - b.sort);
-        this._filteredList = this._filteredTodos(this._filter);
-        this._render();
-      },
+    this._r.subscribe(listTodos, data => {
+      this._list = data;
+      this._list.sort((a: Todo, b: Todo) => a.sort - b.sort);
+      this._filteredList = this._filteredTodos(this._filter);
+      this._render();
     });
   }
 
