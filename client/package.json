@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "nanoid": "^4.0.0",
-    "replicache": ">=14.1.0",
+    "replicache": ">=15.0.1",
     "shared": "^0.1.0"
   },
   "devDependencies": {
