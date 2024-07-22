@@ -8,7 +8,7 @@
     "replicache": ">=15.0.1",
     "shared": "^0.1.0",
     "nanoid": "^4.0.0",
-    "replicache-transaction": "^0.3.3"
+    "replicache-transaction": "^0.4.0"
   },
   "devDependencies": {
     "shared": "^0.1.0",
